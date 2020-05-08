@@ -2,7 +2,6 @@
 # This is licensed software from AccelByte Inc, for limitations
 # and restrictions contact your company contract manager.
 
-import datetime
 import json
 
 from setuptools import setup, find_packages
@@ -16,9 +15,7 @@ test_requires = [
     'tox'
 ]
 
-now = datetime.datetime.now()
-license_string = "Copyright (c) {0} AccelByte Inc. All Rights Reserved.".format(
-    now.year)
+license_string = "Apache 2.0"
 
 with open('README.md', encoding='utf-8') as f:
     readme = f.read()
