@@ -1,0 +1,33 @@
+# Copyright (c) 2020 AccelByte Inc. All Rights Reserved.
+# This is licensed software from AccelByte Inc, for limitations
+# and restrictions contact your company contract manager.
+
+version: '3'
+services:
+  test:
+    image: justice-augment-python-sdk-builder
+    container_name: justice-augment-python-sdk-test
+    volumes:
+      - ${PWD}:/workspace/justice-augment-python-sdk
+    working_dir: /workspace/justice-augment-python-sdk
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    environment:
+      IAM_CLIENT_ID: ${IAM_CLIENT_ID}
+      IAM_CLIENT_SECRET: ${IAM_CLIENT_SECRET}
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      BUILTIN_DB_USER_NAME: mongouser
+      BUILTIN_DB_USER_PASSWORD: mongopass
+      BUILTIN_DB_NAME: testdb
+  mongodb:
+    image: mongo:bionic
+    container_name: augment-python-sdk-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopass
