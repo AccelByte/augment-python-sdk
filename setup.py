@@ -34,7 +34,7 @@ setup(
     author_email='bahrunnur@accelbyte.io',
     url='https://bitbucket.org/accelbyte/justice-augment-python-sdk',
     license=license_string,
-    packages=['justice'],
+    packages=['justice', 'datastore'],
     install_requires=requires,
     tests_require=test_requires,
     classifiers=[
