@@ -9,7 +9,8 @@ from setuptools import setup, find_packages
 
 # Package dependencies
 requires = [
-    'requests'
+    'requests',
+    'pymongo'
 ]
 test_requires = [
     'tox'
