@@ -45,6 +45,8 @@ $ pip install -r requirements.txt
 
 After that you can import the package, and use it like this:
 
+## Justice package
+
 ```python
 import os
 from justice import Justice
@@ -63,6 +65,17 @@ print("Wallet balance: {0} {1}".format(my_wallet['balance'], my_wallet['currency
 Do not forget to set `IAM_CLIENT_ID` and `IAM_CLIENT_SECRET` in your local environment variables if you want to try it in your local machine.
 
 
+## BuiltInDB package
+```python
+from datastore import BuiltInDB
+
+builtindb = BuiltInDB(endpoint=<INSERT_YOUR_MONGODB_URL_HERE>)
+collection_name = "sample-collection"
+data = {"name": "sample-name", "description": "sample-description"}
+created_data = builtindb.database.insert(collection_name, data)
+print(created_data)
+```
+If `endpoint` parameter in `BuiltInDB` object initializationis not set, default value pointing to AccelByte's Justice demo mongoDB will be used.   
 ## Commit Message Guidelines
 We use [https://www.conventionalcommits.org/](https://www.conventionalcommits.org/) as a guidelines to write commit message. You use this format to write your commit message:
 
