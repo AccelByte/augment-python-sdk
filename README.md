@@ -72,7 +72,7 @@ from datastore import BuiltInDB
 builtindb = BuiltInDB(endpoint=<INSERT_YOUR_MONGODB_URL_HERE>)
 collection_name = "sample-collection"
 data = {"name": "sample-name", "description": "sample-description"}
-created_data = builtindb.database.insert(collection_name, data)
+created_data = builtindb.insert(collection_name, data)
 print(created_data)
 ```
 If `endpoint` parameter in `BuiltInDB` object initializationis not set, default value pointing to AccelByte's Justice demo mongoDB will be used.   

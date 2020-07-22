@@ -61,6 +61,9 @@ class BuiltInDB(object):
         except Exception as exception:
             raise exception
 
+        """ remove field '_id' to make it easier for user to return the data in Augment function"""
+        data.pop('_id', None)
+
         return data
 
     def get(self, collection_name, get_filter={}):
@@ -74,9 +77,13 @@ class BuiltInDB(object):
             data (dict)
         """
         try:
-            result_data = self.database[collection_name].find_one(get_filter)
+            result_data = self.database[collection_name].find_one(get_filter, {'_id': False})
         except Exception as exception:
             raise exception
+
+        """ remove field '_id' to make it easier for user to return the data in Augment function"""
+        if result_data is not None:
+            result_data.pop('_id', None)
 
         return result_data
 
@@ -97,6 +104,9 @@ class BuiltInDB(object):
                 raise Exception("data to update not found")
         except Exception as exception:
             raise exception
+
+        """ remove field '_id' to make it easier for user to return the data in Augment function"""
+        new_data.pop('_id', None)
 
         return new_data
 
