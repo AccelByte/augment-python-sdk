@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 -
 
+## [0.2.3] - 2020-07-23
+### Fixed
+- Built-in Databas Wrapper return value
+- Built-in Database Wrapper sample code
+
 ## [0.2.2] - 2020-07-22
 ### Fixed
 - Package list in setup.py

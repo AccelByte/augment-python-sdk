@@ -3,12 +3,13 @@ from datastore import BuiltInDB
 
 def update_data_builtindb(event, context):
     builtindb = BuiltInDB()
-    collection_name = "sample-collection"
+    collection_name = "sample-collection-fauzan"
     data = event['data']
-    created_data = builtindb.database.insert(collection_name, data)
-    print(created_data)
+    old_data = {"name": data['old_name'], "company": data['old_company']}
+    new_data = {"name": data['new_name'], "company": data['new_company']}
+    try:
+        updated_data = builtindb.update(collection_name, old_data, new_data)
+    except Exception as e:
+        return str(e)
 
-    new_data = data
-    new_data["name"] = "updated_name"
-    updated_data = builtindb.database.update(collection_name, created_data, new_data)
     return updated_data

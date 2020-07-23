@@ -29,8 +29,9 @@ class BuiltInDBTestCase(unittest.TestCase):
 
         inserted_data = self.builtin_database.insert(test_collection, test_data)
         get_result_data = mongo_client_db[test_collection].find_one(test_data)
+        expected_data = {"name": "test", "address": "test address"}
 
-        self.assertEqual(test_data, inserted_data)
+        self.assertEqual(expected_data, inserted_data)
         self.assertEqual(test_data["name"], get_result_data["name"])
 
         mongo_client_db[test_collection].delete_one(test_data)
@@ -42,8 +43,9 @@ class BuiltInDBTestCase(unittest.TestCase):
         mongo_client_db[test_collection].insert_one(test_data)
 
         get_data = self.builtin_database.get(test_collection, test_data)
+        expected_data = {"name": "test", "address": "test address"}
 
-        self.assertEqual(test_data["name"], get_data["name"])
+        self.assertEqual(expected_data, get_data)
 
         mongo_client_db[test_collection].delete_one(test_data)
 
@@ -64,7 +66,7 @@ class BuiltInDBTestCase(unittest.TestCase):
 
         updated_data = self.builtin_database.update(test_collection, test_data, new_data)
 
-        self.assertEqual(new_data["name"], updated_data["name"])
+        self.assertEqual(new_data, updated_data)
 
         mongo_client_db[test_collection].delete_one(new_data)
 
