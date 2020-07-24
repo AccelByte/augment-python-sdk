@@ -67,13 +67,13 @@ Do not forget to set `IAM_CLIENT_ID` and `IAM_CLIENT_SECRET` in your local envir
 
 ## BuiltInDB package
 ```python
-from datastore import BuiltInDB
+from datastore import MongoDB
 
-builtindb = BuiltInDB(endpoint=<INSERT_YOUR_MONGODB_URL_HERE>)
+augment_mongoclient = MongoDB(endpoint=<INSERT_YOUR_MONGODB_URL_HERE>)
 collection_name = "sample-collection"
 data = {"name": "sample-name", "description": "sample-description"}
-created_data = builtindb.insert(collection_name, data)
-print(created_data)
+augment_mongoclient.builtin_db[collection_name].insert_one(data)
+print(data)
 ```
 If `endpoint` parameter in `BuiltInDB` object initializationis not set, default value pointing to AccelByte's Justice demo mongoDB will be used.   
 ## Commit Message Guidelines

@@ -2,15 +2,17 @@ import unittest
 import os
 
 from pymongo import MongoClient
-from datastore import BuiltInDB
+from datastore import MongoDB
 
 
 class BuiltInDBTestCase(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.builtin_database = BuiltInDB(endpoint="mongodb:27017")
-        cls.mongo_client = MongoClient('mongodb://mongouser:mongopass@mongodb:27017')
+        cls.augment_mongodb = MongoDB(endpoint="mongodb:27017")
+        username = os.environ['BUILTIN_DB_USER_NAME']
+        password = os.environ['BUILTIN_DB_USER_PASSWORD']
+        cls.mongo_client = MongoClient('mongodb://%s:%s@mongodb:27017' % (username, password))
 
     @classmethod
     def tearDownClass(cls):
@@ -22,68 +24,11 @@ class BuiltInDBTestCase(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_insert_success(self):
-        test_collection = "testcollection"
-        test_data = {"name": "test", "address": "test address"}
+    def test_database_pointing(self):
         mongo_client_db = self.mongo_client[os.environ['BUILTIN_DB_NAME']]
+        collection_name = "samplecollection"
+        mongo_client_db[collection_name].insert_one({"some": "test"})
+        get_result = self.augment_mongodb.builtin_db[collection_name].find_one({"some": "test"})
+        get_result.pop('_id', None)
 
-        inserted_data = self.builtin_database.insert(test_collection, test_data)
-        get_result_data = mongo_client_db[test_collection].find_one(test_data)
-        expected_data = {"name": "test", "address": "test address"}
-
-        self.assertEqual(expected_data, inserted_data)
-        self.assertEqual(test_data["name"], get_result_data["name"])
-
-        mongo_client_db[test_collection].delete_one(test_data)
-
-    def test_get_success(self):
-        test_collection = "testcollection"
-        test_data = {"name": "test", "address": "test address"}
-        mongo_client_db = self.mongo_client[os.environ['BUILTIN_DB_NAME']]
-        mongo_client_db[test_collection].insert_one(test_data)
-
-        get_data = self.builtin_database.get(test_collection, test_data)
-        expected_data = {"name": "test", "address": "test address"}
-
-        self.assertEqual(expected_data, get_data)
-
-        mongo_client_db[test_collection].delete_one(test_data)
-
-    def test_get_not_found(self):
-        test_collection = "testcollection"
-        test_data = {"name": "test", "address": "test address"}
-
-        get_data = self.builtin_database.get(test_collection, test_data)
-
-        self.assertIsNone(get_data)
-
-    def test_update_success(self):
-        test_collection = "testcollection"
-        test_data = {"name": "test", "address": "test address"}
-        mongo_client_db = self.mongo_client[os.environ['BUILTIN_DB_NAME']]
-        mongo_client_db[test_collection].insert_one(test_data)
-        new_data = {"name": "new_test", "address": "test_address"}
-
-        updated_data = self.builtin_database.update(test_collection, test_data, new_data)
-
-        self.assertEqual(new_data, updated_data)
-
-        mongo_client_db[test_collection].delete_one(new_data)
-
-    def test_update_not_found(self):
-        test_collection = "testcollection"
-        test_data = {"name": "test", "address": "test address"}
-        new_data = {"name": "new_test", "address": "test_address"}
-
-        with self.assertRaisesRegex(Exception, "data to update not found"):
-            self.builtin_database.update(test_collection, test_data, new_data)
-
-    def test_delete_success(self):
-        test_collection = "testcollection"
-        test_data = {"name": "test", "address": "test address"}
-        mongo_client_db = self.mongo_client[os.environ['BUILTIN_DB_NAME']]
-        mongo_client_db[test_collection].insert_one(test_data)
-
-        error = self.builtin_database.delete(test_collection, test_data)
-
-        self.assertIsNone(error)
+        self.assertEqual({"some": "test"}, get_result)
