@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 -
 
+## [0.3.0] - 2020-07-24
+### Fixed
+- Class and attribute naming
+- Now database operation will use pymongo methods
+
 ## [0.2.3] - 2020-07-23
 ### Fixed
 - Built-in Databas Wrapper return value
