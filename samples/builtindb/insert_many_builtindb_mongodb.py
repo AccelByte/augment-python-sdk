@@ -1,3 +1,4 @@
+import json
 from datastore import MongoDB
 
 
@@ -12,5 +13,5 @@ def insert_many_data_builtindb(event, context):
 
     for element in data:
         element.pop('_id', None)
-
-    return data
+    return_data = json.dumps(data, indent=4)
+    return return_data

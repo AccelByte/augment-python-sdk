@@ -30,8 +30,7 @@ class MongoDB(object):
     Attributes:
         database: Python object that interacts with built-in database
     """
-    DEFAULT_MONGODB = "abcluster-accelbyte-prod-docdb-cluster-0.cfunpavjqvdi.us-west-2.docdb.amazonaws.com:27017/" + \
-                      "?replicaSet=rs0&readPreference=secondaryPreferred"
+    DEFAULT_MONGODB = os.environ['BUILTIN_DB_HOST']
 
     def __init__(self, endpoint=DEFAULT_MONGODB):
         # create mongoDB client session
