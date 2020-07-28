@@ -11,5 +11,7 @@ def get_data_builtindb(event, context):
         return str(e)
     if get_data is not None:
         get_data.pop('_id', None)
+    else:
+        return "data not found"
 
     return get_data

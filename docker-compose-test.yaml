@@ -22,6 +22,7 @@ services:
       BUILTIN_DB_USER_NAME: mongouser
       BUILTIN_DB_USER_PASSWORD: mongopass
       BUILTIN_DB_NAME: testdb
+      BUILTIN_DB_HOST: mongodb:27017
   mongodb:
     image: mongo:bionic
     container_name: augment-python-sdk-mongodb
